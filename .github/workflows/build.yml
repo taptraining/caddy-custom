@@ -34,5 +34,5 @@ jobs:
 
     - name: aqua-scan
       run: docker run -it --rm registry.aquasec.com/scanner:latest-saas scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
-      # run: scannercli scan -H https://2635a139a3-d.cloud.aquasec.com -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
+      #run: scannercli scan -H https://2635a139a3-d.cloud.aquasec.com -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
       
