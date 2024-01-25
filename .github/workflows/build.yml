@@ -17,9 +17,6 @@ jobs:
     - name: Tag image with Registry
       run: docker tag my-demo-image:${{ github.sha }} my-registry/my-demo-image:${{ github.sha }}
 
-    - name: Push to Registry
-      run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
-
     - name: Download a scanner
       run: wget -nv --user=${{ secrets.REG_USER }} --password=${{ secrets.REG_RASS }} https://download.aquasec.com/scanner/2401.3.18/scannercli -O ./scannercli
 
@@ -28,3 +25,11 @@ jobs:
 
     - name: Scan
       run: ./scannercli scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
+
+  push:
+
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Push to Registry
+        run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
