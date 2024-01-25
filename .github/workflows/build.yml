@@ -29,8 +29,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: registry.aquasec.com
-        username: denys@terasky.com
-        password: Cbcntvf-ybgtkm2024
+        username: ${{ secrets.REG_USER }}
+        password: ${{ secrets.REG_RASS }}
         
     - name: Scan
       run: docker run registry.aquasec.com/scanner:latest-saas scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
