@@ -33,3 +33,4 @@ jobs:
     steps:
       - name: Push to Registry
         run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
+   
