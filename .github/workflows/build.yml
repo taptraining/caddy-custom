@@ -1,11 +1,6 @@
 name: Build image and push
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+on: [push, pull_request]
 
 jobs:
 
@@ -24,3 +19,12 @@ jobs:
 
     - name: Push to Registry
       run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
+
+    - name: Download a scanner
+      run: wget --user=${{ secrets.REG_USER }} --password=${{ secrets.REG_PASS }} https://download.aquasec.com/scanner/2401.3.18/scannercli -O ./scannercli
+
+    - name: chmod 
+      run: chmod 777 ./scannercli
+
+    - name: Scan
+      run: ./scannercli scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
