@@ -21,14 +21,13 @@ jobs:
     - name: Push to Registry
       run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
 
-    - name: Login to Registry
-      uses: docker/login-action@v3
+    - name: Login to R3egistry
+      uses: docker/login-action@v1
       with:
         registry: registry.aquasec.com
         username: ${{ secrets.REG_USER }}
-        password: ${{ secrets.REG_PASS }}
-
-    - name: aqua-scan
-      run: docker run -it --rm registry.aquasec.com/scanner:latest-saas scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
-      # run: scannercli scan -H https://2635a139a3-d.cloud.aquasec.com -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
+        password: ${{ secrets.REG_RASS }}
+        
+    - name: Scan
+      run: docker run -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:latest-saas scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
       
