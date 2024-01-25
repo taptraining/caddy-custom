@@ -21,7 +21,7 @@ jobs:
       run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
 
     - name: Download a scanner
-      run: wget --user=${{ secrets.REG_USER }} --password=${{ secrets.REG_RASS }} https://download.aquasec.com/scanner/2401.3.18/scannercli -O ./scannercli
+      run: wget -nv --user=${{ secrets.REG_USER }} --password=${{ secrets.REG_RASS }} https://download.aquasec.com/scanner/2401.3.18/scannercli -O ./scannercli
 
     - name: chmod 
       run: chmod 777 ./scannercli
