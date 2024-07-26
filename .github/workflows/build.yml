@@ -16,24 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-demo-image:${{ github.sha }}
-
-    - name: Tag image with Registry
-      run: docker tag my-demo-image:${{ github.sha }} my-registry/my-demo-image:${{ github.sha }}
-
-    - name: Push to Registry
-      run: echo "docker push my-registry/my-demo-image:${{ github.sha }}"
-
-    - name: Login to R3egistry
-      uses: docker/login-action@v1
-      with:
-        registry: registry.aquasec.com
-        username: ${{ secrets.REG_USER }}
-        password: ${{ secrets.REG_RASS }}
+    - name: Pull the Docker image
+      run: docker pull greekgoods/kimura
         
     - name: Scan
-      run: sudo twistcli sandbox --address https://europe-west3.cloud.twistlock.com/eu-158061 --token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGVueXNAdGVyYXNreS5jb20iLCJyb2xlIjoiYWRtaW4iLCJyb2xlUGVybXMiOltbMjU1LDI1NSwyNTUsMjU1LDI1NSw5NV0sWzI1NSwyNTUsMjU1LDI1NSwyNTUsOTVdXSwic2Vzc2lvblRpbWVvdXRTZWMiOjYwMCwic2Fhc1Rva2VuIjoiZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKemRXSWlPaUprWlc1NWMwQjBaWEpoYzJ0NUxtTnZiU0lzSW5ObGNuWnBZMlZWYzJGblpVOXViSGtpT25SeWRXVXNJbVpwY25OMFRHOW5hVzRpT21aaGJITmxMQ0p3Y21semJXRkpaQ0k2SWprMU16TTBNVFkwTlRjd01EUTNPRGszTmlJc0ltbHdRV1JrY21WemN5STZJak0wTGpFd055NDVNUzR4TURVaUxDSnBjM01pT2lKb2RIUndjem92TDJGd2FTNWxkUzV3Y21semJXRmpiRzkxWkM1cGJ5SXNJbkpsYzNSeWFXTjBJam93TENKMWMyVnlVbTlzWlZSNWNHVkVaWFJoYVd4eklqcDdJbWhoYzA5dWJIbFNaV0ZrUVdOalpYTnpJanBtWVd4elpYMHNJblZ6WlhKU2IyeGxWSGx3WlU1aGJXVWlPaUpUZVhOMFpXMGdRV1J0YVc0aUxDSnBjMU5UVDFObGMzTnBiMjRpT21aaGJITmxMQ0pzWVhOMFRHOW5hVzVVYVcxbElqb3hOekl4T1RrM05UazNOamczTENKaGRXUWlPaUpvZEhSd2N6b3ZMMkZ3YVM1bGRTNXdjbWx6YldGamJHOTFaQzVwYnlJc0luVnpaWEpTYjJ4bFZIbHdaVWxrSWpveExDSmhkWFJvTFcxbGRHaHZaQ0k2SWxCQlRsOVRRVTFNTWlJc0luTmxiR1ZqZEdWa1EzVnpkRzl0WlhKT1lXMWxJam9pVkdWeVlWTnJlU0F0SURjMU1ERTROams0TmpBd05EZzRNRGMyTXpZaUxDSnpaWE56YVc5dVZHbHRaVzkxZENJNk16QXNJblZ6WlhKU2IyeGxTV1FpT2lJNE16aGtOemczWlMweU9ERTFMVFF4Tm1NdFlqSmtOeTAxTW1VeU4yWXhaalF6TWpNaUxDSm9ZWE5FWldabGJtUmxjbEJsY20xcGMzTnBiMjV6SWpwbVlXeHpaU3dpWlhod0lqb3hOekl4T1RrNE1qQXpMQ0pwWVhRaU9qRTNNakU1T1RjMk1ETXNJblZ6WlhKdVlXMWxJam9pWkdWdWVYTkFkR1Z5WVhOcmVTNWpiMjBpTENKMWMyVnlVbTlzWlU1aGJXVWlPaUpUZVhOMFpXMGdRV1J0YVc0aWZRLnFfLTQ4TjBxWEpfT24yWFNycG5wYWJtbGtQSFdTWElhRGNkOXFSUVp5Q0EiLCJpc3MiOiJ0d2lzdGxvY2siLCJleHAiOjE3MjIwMDEyMDN9.GWn7zKxSfK79on_JpbBqBWy7oDbZCQI2yJTq9iSIdmg" --analysis-duration 2m my-registry/my-demo-image:${{ github.sha }}
-      # docker run -v /var/run/docker.sock:/var/run/docker.sock registry.aquasec.com/scanner:latest-saas scan -H https://2635a139a3-d.cloud.aquasec.com/ -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
-      #run: scannercli scan -H https://2635a139a3-d.cloud.aquasec.com -A ${{ secrets.SCANNER_TOKEN }} --local my-registry/my-demo-image:${{ github.sha }}
+      run: sudo twistcli sandbox --address https://europe-west3.cloud.twistlock.com/eu-158061 --token ${{ secrets.SCANNER_TOKEN }} --analysis-duration 2m greekgoods/kimura
       
