@@ -17,8 +17,8 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Pull the Docker image
-      run: docker pull greekgoods/kimura
+      run: docker pull greekgoods/kimura:1.0
         
     - name: Scan
-      run: sudo twistcli sandbox --address https://europe-west3.cloud.twistlock.com/eu-158061 --token ${{ secrets.SCANNER_TOKEN }} --analysis-duration 2m greekgoods/kimura
+      run: sudo twistcli sandbox --address https://europe-west3.cloud.twistlock.com/eu-158061 --token ${{ secrets.SCANNER_TOKEN }} --analysis-duration 2m greekgoods/kimura:1.0
       
