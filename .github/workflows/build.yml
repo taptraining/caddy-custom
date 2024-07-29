@@ -1,4 +1,4 @@
-name: Build image and push
+name: Pull image and scan
 
 env:
   CONSOLE_ADDRESS: https://europe-west3.cloud.twistlock.com/eu-158061
@@ -25,4 +25,10 @@ jobs:
         
     - name: Scan
       run: sudo twistcli sandbox --address ${{ env.CONSOLE_ADDRESS }} --user ${{ secrets.REG_USER }} --password ${{ secrets.REG_RASS }} --analysis-duration 2m ${{ env.IMAGE_NAME }}
-      
+
+  push:
+    needs: build   
+    runs-on: self-hosted
+    steps: 
+      - name: Push
+        run: docker push ${{ env.IMAGE_NAME }}
