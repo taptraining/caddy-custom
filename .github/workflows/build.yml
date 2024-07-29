@@ -18,13 +18,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
+    
+    # Pull the image
     - name: Pull the Docker image
       run: docker pull ${{ env.IMAGE_NAME }}
+      
+    # Download twistcli with the latest version
+    - name: Download twistcli
+      run: curl -u ${{ secrets.REG_USER }}:${{ secrets.REG_RASS }} -L ${{ env.CONSOLE_ADDRESS }}/api/v1/util/twistcli > twistcli; chmod a+x twistcli;
 
-    - name: Upload tewistcli
-      run: curl -u ${{ secrets.REG_USER }}:${{ secrets.REG_RASS }} --progress-bar -L ${{ env.CONSOLE_ADDRESS }}/api/v1/util/twistcli > twistcli; sudo chmod a+x twistcli;
-        
+    # Run a sandbox scan
     - name: Scan
       run: sudo ./twistcli sandbox --address ${{ env.CONSOLE_ADDRESS }} --user ${{ secrets.REG_USER }} --password ${{ secrets.REG_RASS }} --analysis-duration 2m ${{ env.IMAGE_NAME }}
 
